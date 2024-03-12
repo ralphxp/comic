@@ -1,6 +1,6 @@
 <?php
 
-use Ralph\Comic\HomeController;
+use Codx\Comic\HomeController;
 
 @get("/")
     @controller("HomeController@index")

@@ -1,5 +1,5 @@
 <?php
-namespace Ralph\Comic;
+namespace Codx\Comic;
 
 define('ROOT', getcwd());
 

@@ -1,5 +1,5 @@
 <?php
-namespace Ralph\Comic\Controllers;
+namespace Codx\Comic\Controllers;
 
 use Bird\Ralph\Engine as View;
 

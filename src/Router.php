@@ -1,8 +1,8 @@
 <?php
-namespace Ralph\Comic;
+namespace Codx\Comic;
 
-use Ralph\Comic\HomeController;
-use Bird\Ralph\Engine as View;
+use Codx\Comic\HomeController;
+use Bird\Codx\Engine as View;
 
 class Router{
     private $routes = [];
@@ -99,7 +99,7 @@ class Router{
             require_once $controllerFile;
 
             // Create an instance of the controller
-            $namespace = 'Ralph\\Comic\\Controllers';
+            $namespace = 'Codx\\Comic\\Controllers';
             $namespace .= '\\'.$controller;
             $controllerInstance = new $namespace;
 

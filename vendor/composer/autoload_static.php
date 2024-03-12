@@ -19,10 +19,6 @@ class ComposerStaticInit85dbb4b806385d5f9cc10747428999ac
             'Symfony\\Polyfill\\Mbstring\\' => 26,
             'Symfony\\Polyfill\\Ctype\\' => 23,
         ),
-        'R' => 
-        array (
-            'Ralph\\Comic\\' => 12,
-        ),
         'P' => 
         array (
             'PhpOption\\' => 10,
@@ -34,6 +30,10 @@ class ComposerStaticInit85dbb4b806385d5f9cc10747428999ac
         'D' => 
         array (
             'Dotenv\\' => 7,
+        ),
+        'C' => 
+        array (
+            'Codx\\Comic\\' => 11,
         ),
         'B' => 
         array (
@@ -54,10 +54,6 @@ class ComposerStaticInit85dbb4b806385d5f9cc10747428999ac
         array (
             0 => __DIR__ . '/..' . '/symfony/polyfill-ctype',
         ),
-        'Ralph\\Comic\\' => 
-        array (
-            0 => __DIR__ . '/../..' . '/src',
-        ),
         'PhpOption\\' => 
         array (
             0 => __DIR__ . '/..' . '/phpoption/phpoption/src/PhpOption',
@@ -69,6 +65,10 @@ class ComposerStaticInit85dbb4b806385d5f9cc10747428999ac
         'Dotenv\\' => 
         array (
             0 => __DIR__ . '/..' . '/vlucas/phpdotenv/src',
+        ),
+        'Codx\\Comic\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/src',
         ),
         'Bird\\Ralph\\' => 
         array (

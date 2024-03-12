@@ -1,7 +1,7 @@
 <?php
-namespace Ralph\Comic;
+namespace Codx\Comic;
 
-use Ralph\Comic\Router;
+use Codx\Comic\Router;
 
 class Core{
 

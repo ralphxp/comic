@@ -1,9 +1,9 @@
 <?php return array(
     'root' => array(
         'name' => 'ralph/comic',
-        'pretty_version' => '1.0.0+no-version-set',
-        'version' => '1.0.0.0',
-        'reference' => NULL,
+        'pretty_version' => 'dev-master',
+        'version' => 'dev-master',
+        'reference' => '7e17d4c5e5810ac9203574bab475ea1874c1f72b',
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -42,9 +42,9 @@
             'dev_requirement' => false,
         ),
         'ralph/comic' => array(
-            'pretty_version' => '1.0.0+no-version-set',
-            'version' => '1.0.0.0',
-            'reference' => NULL,
+            'pretty_version' => 'dev-master',
+            'version' => 'dev-master',
+            'reference' => '7e17d4c5e5810ac9203574bab475ea1874c1f72b',
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
