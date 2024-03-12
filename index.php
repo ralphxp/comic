@@ -1,6 +1,7 @@
 <?php
+require 'config/app.php';
 require_once 'vendor/autoload.php';
-require 'src/config/app.php';
+
 
 use Codx\Comic\Bootstrap as App;
 
