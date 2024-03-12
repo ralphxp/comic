@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Welcome to Comic Framework</title>
+    <title>Welcome to Your Framework</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -36,8 +36,8 @@
 </head>
 <body>
     <div class="container">
-        <h1>Welcome to Comic </h1>
-        <p>This is a default welcome page for your micro PHP framework.</p>
+        <h1>404 Error page</h1>
+        <p>The resource you are looking for is not here</p>
     </div>
 </body>
 </html>

@@ -2,6 +2,7 @@
 namespace Ralph\Comic;
 
 use Ralph\Comic\HomeController;
+use Bird\Ralph\Engine as View;
 
 class Router{
     private $routes = [];
@@ -81,7 +82,7 @@ class Router{
         } else {
             // Handle 404 Not Found
             http_response_code(404);
-            echo '404 Not Found';
+            View::view('404');
         }
     }
 

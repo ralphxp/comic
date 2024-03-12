@@ -7,7 +7,7 @@ class HomeController{
 
     public function index()
     {
-        return View::view('auth.login');
+        return View::view('welcome');
     }
 
     public function auth()

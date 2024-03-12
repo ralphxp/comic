@@ -6,6 +6,3 @@ use Ralph\Comic\HomeController;
     @controller("HomeController@index")
 @end
 
-@post('/')
-    @controller("HomeController@auth")
-@end
