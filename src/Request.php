@@ -1,7 +1,9 @@
 <?php
 namespace Codx\Comic;
 
-class Request {
+use Symfony\Component\HttpFoundation\Request as Requests;
+
+class Request extends Requests{
     private $method;
     private $uri;
     private $headers;

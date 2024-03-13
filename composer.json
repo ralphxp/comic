@@ -3,7 +3,9 @@
     "description": "Micro mvc framework for php",
     "type": "library",
     "require": {
-        "php": "^7.2.5 || ^8.0"
+        "php": "^7.2.5 || ^8.0",
+        "symfony/http-kernel": "7.1.x-dev",
+        "symfony/validator": "7.1.x-dev"
     },
     "license": "MIT",
     "autoload": {
