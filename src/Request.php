@@ -5,8 +5,8 @@ use Symfony\Component\HttpFoundation\Request as Requests;
 
 class Request extends Requests{
     private $method;
-    private $uri;
-    private $headers;
+    public $uri;
+    public $headers;
     private $queryParams;
     private $body;
 
