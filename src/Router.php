@@ -1,6 +1,8 @@
 <?php
 namespace Codx\Comic;
 
+use Codx\Comic\Request;
+
 use Bird\Codx\Engine as View;
 
 class Router{
@@ -103,7 +105,7 @@ class Router{
             $controllerInstance = new $namespace;
 
             // Call the specified method
-            $controllerInstance->$method();
+            $controllerInstance->$method(new Request);
         } else {
             // Handle 500 Internal Server Error
             http_response_code(500);
