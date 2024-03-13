@@ -8,7 +8,7 @@ use Codx\Comic\Router;
 
 class Core{
 
-
+// 
     public static function runApp()
     {
         $capsule = new Capsule;
