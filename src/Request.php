@@ -6,7 +6,7 @@ use Symfony\Component\HttpFoundation\Request as Requests;
 class Request extends Requests{
     private $method;
     public $uri;
-    public $headers;
+    // public $headers;
     private $queryParams;
     private $body;
 
@@ -14,7 +14,7 @@ class Request extends Requests{
     {
         $this->method = $_SERVER['REQUEST_METHOD'];
         $this->uri = $_SERVER['REQUEST_URI'];
-        $this->headers = getallheaders();
+        // $this->headers = getallheaders();
         $this->queryParams = $_GET;
         $this->body = file_get_contents('php://input');
     }
