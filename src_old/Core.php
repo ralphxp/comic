@@ -1,9 +1,6 @@
 <?php
 namespace Codx\Comic;
 
-use Illuminate\Database\Capsule\Manager as Capsule;
-use Illuminate\Events\Dispatcher;
-use Illuminate\Container\Container;
 use Codx\Comic\Router;
 
 class Core{
@@ -11,25 +8,6 @@ class Core{
 
     public static function runApp()
     {
-        $capsule = new Capsule;
-        $capsule->addConnection([
-            'driver' => 'mysql',
-            'host' => 'localhost',
-            'database' => 'rental_house',
-            'username' => 'root',
-            'password' => '',
-            'charset' => 'utf8',
-            'collation' => 'utf8_unicode_ci',
-            'prefix' => '',
-        ]);
-
-        
-        $capsule->setEventDispatcher(new Dispatcher(new Container));
-        $capsule->setAsGlobal();
-        $capsule->bootEloquent();
-        
-
-
         if(file_exists(ROUTE_PATH.ROUTE_ENTRY)){
             $content = file_get_contents(ROUTE_PATH.ROUTE_ENTRY);
             self::registerRoutes($content);

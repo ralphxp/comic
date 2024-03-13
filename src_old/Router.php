@@ -1,6 +1,7 @@
 <?php
 namespace Codx\Comic;
 
+use Codx\Comic\HomeController;
 use Bird\Codx\Engine as View;
 
 class Router{
@@ -95,10 +96,10 @@ class Router{
         $controllerFile = CONTROLLER_PATH . '/' . $controller . '.php';
         // echo $controllerFile;
         if (file_exists($controllerFile)) {
-            // require_once $controllerFile;
+            require_once $controllerFile;
 
             // Create an instance of the controller
-            $namespace = 'Codx\\Comic\\Controller';
+            $namespace = 'Codx\\Comic\\Controllers';
             $namespace .= '\\'.$controller;
             $controllerInstance = new $namespace;
 
