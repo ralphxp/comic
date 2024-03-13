@@ -8,4 +8,5 @@ use Silber\Bouncer\Bouncer;
 
 class Model extends Eloquent{
     // use SoftDeletes;
+    // more
 }
