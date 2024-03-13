@@ -2,7 +2,7 @@
 namespace Codx\Comic;
 
 
-class ExceptionHandler
+class Exception
 {
     public static function handle(Exception $exception)
     {

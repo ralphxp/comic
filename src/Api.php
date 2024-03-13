@@ -3,7 +3,7 @@ namespace Codx\Comic;
 
 
 
-class API
+class Api
 {
     public static function sendResponse($data, $status = 200)
     {
