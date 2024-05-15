@@ -27,6 +27,7 @@ class Core{
         $capsule->setEventDispatcher(new Dispatcher(new Container));
         $capsule->setAsGlobal();
         $capsule->bootEloquent();
+        session_start();
         
 
 

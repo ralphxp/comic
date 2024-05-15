@@ -3,30 +3,48 @@ namespace Codx\Comic;
 
 use Codx\Comic\Request;
 
-use Bird\Codx\Engine as View;
+use Codx\Ralph\Engine as View;
 
 class Router{
     private $routes = [];
+    private $auth_routes = [];
+    private $params = [];
 
     public function routeParser($code)
     {
-        $
+        $code = $this->parseAuth($code);
         $code = $this->parseGet($code);
         $code = $this->parsePost($code);
-       
-        // file_put_contents(CACHE_PATH.'/route.php', $code);
-        // self::requireFile(CACHE_PATH.'/route.php');
+        $code = $this->parsePut($code);
+        $code = $this->parseDelete($code);
         $this->dispatch();
     }
 
-    public function parseGet($code)
+    public function parseAuth($code)
+    {
+        preg_match_all('/@auth(.+?)@endauth/s', $code, $matches, PREG_SET_ORDER);
+        foreach($matches as $match)
+        {
+            $acode = $match[1];
+            $acode = $this->parseGet($acode, true);
+            $acode = $this->parsePost($acode, true);
+        }
+        
+        
+        $code = preg_replace('/@auth(.+?)@endauth/s', '', $code);
+
+        return $code;
+    }
+
+
+    public function parseGet($code, $auth=false)
     {
         preg_match_all('/@get\s*\([\s*\"\'](.+?)[\s*\"\']\)(.+?)@end/s', $code, $matches, PREG_SET_ORDER);
         foreach($matches as $route)
         {
             $path = $route[1];
-            $controller = $this->parseController($route[2]);
-            $this->get($path, $controller);
+            $handler = $this->parseController($route[2]);
+            $this->addRoute('GET', $path, $handler, $auth);
         }
         return $code;
     }
@@ -44,6 +62,32 @@ class Router{
         return $code;
     }
 
+    public function parsePut($code)
+    {
+        preg_match_all('/@put\s*\([\s*\"\'](.+?)[\s*\"\']\)(.+?)@end/s', $code, $matches, PREG_SET_ORDER);
+        foreach($matches as $route)
+        {
+            $path = $route[1];
+            $controller = $this->parseController($route[2]);
+            $file =  Core::parseAtFile($code);
+            $this->put($path, $controller);
+        }
+        return $code;
+    }
+
+    public function parseDelete($code)
+    {
+        preg_match_all('/@delete\s*\([\s*\"\'](.+?)[\s*\"\']\)(.+?)@end/s', $code, $matches, PREG_SET_ORDER);
+        foreach($matches as $route)
+        {
+            $path = $route[1];
+            $controller = $this->parseController($route[2]);
+            $file =  Core::parseAtFile($code);
+            $this->delete($path, $controller);
+        }
+        return $code;
+    }
+
     public function parseController($code)
     {
         preg_match_all('/@controller\([\s*\"\']*(.+?)[\s*\"\']\)/s', $code, $matches, PREG_SET_ORDER);
@@ -57,15 +101,87 @@ class Router{
     }
 
     // Register a GET route
-    public function get($route, $handler)
+    public function get($path, $handler)
     {
-        $this->routes['GET'][$route] = $handler;
+        
+        $this->addRoute('GET', $path, $handler);
     }
 
     // Register a POST route
-    public function post($route, $handler)
+    public function post($path, $handler)
     {
-        $this->routes['POST'][$route] = $handler;
+        $this->addRoute('POST', $path, $handler);
+    }
+
+    public function put($path, $handler)
+    {
+        $this->addRoute('PUT', $path, $handler);
+    }
+
+    public function delete($path, $handler)
+    {
+        $this->addRoute('DELETE', $path, $handler);
+    }
+
+    private function addRoute($method, $path, $handler, $auth=false)
+    {
+        $segments = explode('/', trim($path, '/'));
+        $this->routes[$method][$path] = [
+            'handler' => $handler,
+            'segments' => $segments,
+            'auth'      => $auth
+        ];
+    }
+
+    public function parseParams($uri){
+        $method = $_SERVER['REQUEST_METHOD'];
+        $path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+
+        foreach ($this->routes[$method] as $route => $routeData) {
+            $routeSegments = $routeData['segments'];
+            $isAuth = $routeData['auth'];
+            // ;
+            // die(
+            //     var_dump($ms)
+            // );
+            // if($isAuth){
+                if (count($routeSegments) != count(explode('/', trim($path, '/')))) {
+                    continue;
+                }
+
+                $matches = [];
+
+                
+                foreach ($routeSegments as $index => $segment) {
+                    preg_match_all('/\{(.*?)\}/i', $segment, $ms, PREG_SET_ORDER);
+                  
+                    if (!empty($segment) && $segment[0] == '{' && $segment[strlen($segment) - 1] == '}') {
+                        // Parameter segment, capture value
+                        $paramName = substr($segment, 1, -1);
+                        $matches[$paramName] = explode('/', trim($path, '/'))[$index];
+                    } elseif ($segment != explode('/', trim($path, '/'))[$index]) {
+                        // Static segment, no match
+                        continue 2;
+                    }
+                }
+
+
+                $handler = $routeData['handler'];
+                foreach($matches as $param => $value)
+                {
+                    $_REQUEST[$param] = $value;
+                }
+                $this->callHandler($handler, $routeData['auth']);
+            // }else{
+            //     $handler = $routeData['handler'];
+            //     $this->callHandler($handler);
+            // }
+            
+            return;
+        }
+
+        http_response_code(404);
+        View::view('404');
     }
 
     // Dispatch the incoming request
@@ -74,22 +190,23 @@ class Router{
        
         $method = $_SERVER['REQUEST_METHOD'];
         $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
-        // die($uri);
-        // Check if the requested route is registered
-        if (isset($this->routes[$method][$uri])) {
-            // If yes, call the associated handler
-            $handler = $this->routes[$method][$uri];
-            $this->callHandler($handler);
-        } else {
-            // Handle 404 Not Found
-            http_response_code(404);
-            View::view('404');
-        }
+        $this->parseParams($uri);
+        die();
+        // if (isset($this->routes[$method][$uri])) {
+            
+        //     $handler = $this->routes[$method][$uri];
+        //     $this->callHandler($handler);
+        // } else {
+        //     // Handle 404 Not Found
+        //     http_response_code(404);
+        //     View::view('404');
+        // }
     }
 
     // Call the specified handler (controller method)
-    private function callHandler($handler)
+    private function callHandler($handler, $auth)
     {
+        
         // Split the handler into controller and method
         list($controller, $method) = explode('@', $handler);
 
@@ -102,7 +219,7 @@ class Router{
             // Create an instance of the controller
             $namespace = 'Codx\\Comic\\Controller';
             $namespace .= '\\'.$controller;
-            $controllerInstance = new $namespace;
+            $controllerInstance = new $namespace();
 
             // Call the specified method
             $controllerInstance->$method(new Request);
@@ -116,3 +233,4 @@ class Router{
     }
 
 }
+

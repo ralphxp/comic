@@ -1,7 +1,7 @@
 <?php 
 namespace Codx\Comic;
 
-// this is my api class
+
 
 class Api
 {
