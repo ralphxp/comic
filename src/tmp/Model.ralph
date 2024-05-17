@@ -1,0 +1,11 @@
+<?php 
+namespace Codx\Comic\Model;
+
+
+class ModelName extends Model{
+
+    protected $table = "table_name";
+
+    
+
+}
