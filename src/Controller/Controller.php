@@ -23,6 +23,11 @@ class Controller
         }
     }
 
+    public function validate($array, $field)
+    {
+        return true;
+    }
+
     public function APIKEY_Validate()
     {
 
